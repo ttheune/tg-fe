@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 from random import randint
 
 """
@@ -39,8 +40,14 @@ syllable_number = {1: [1, 30], 2: [31, 75], 3: [76, 93], 4: [94, 97], 5: [98, 10
 
 # generate a name (hopefully)
 def main():
+    global rolls
+    args = get_args()
+    rolls = args.rolls
     name = []
-    syll_num = get_results(syllable_number, roll())
+    if args.syllables:
+        syll_num = args.syllables
+    else:
+        syll_num = get_results(syllable_number, roll())
     sylls = []
     for num in range(syll_num):
         sylls.append(get_results(syllables, roll()))
@@ -58,6 +65,8 @@ def roll():
 # Return the result from a given table
 def get_results(group, roll):
     item = [item for item, chance in group.items() if roll in range(chance[0], chance[1] + 1)]
+    if rolls:
+        print('{:02d}: {}'.format(roll, item[0]))
     return item[0]
 
 
@@ -70,6 +79,13 @@ def make_syllable(syllable):
         if letter == 'v':
             letters.append(get_results(vowels, roll()))
     return ''.join(letters)
+
+
+def get_args():
+    parser = argparse.ArgumentParser(description='Generate a name based on TG:FE rules')
+    parser.add_argument('-s', '--syllables', default=False, type=int, help='Choose number of syllables, default is random')
+    parser.add_argument('-r', '--rolls', default=False, action='store_true', help='Show rolls')
+    return parser.parse_args()
 
 
 if __name__ == '__main__':
