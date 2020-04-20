@@ -2,6 +2,15 @@
 
 from random import randint
 
+"""
+This program will generate a random name based on the rules as described in
+The Game: Fantasy Edition
+The tables from the book are converted to dictionaries and then iterated over to produce a name
+As stated from the book:
+It is necessary to remember that in what appears to be an unpronouncable name there could be
+such things as silent letters and "'".  Re-roll if name is not liked.
+"""
+
 vowels = {'a': [1, 17],
           'e': [18, 41],
           'i': [42, 58],
@@ -28,6 +37,7 @@ syllables = {'vc': [1, 30],
 syllable_number = {1: [1, 30], 2: [31, 75], 3: [76, 93], 4: [94, 97], 5: [98, 100]}
 
 
+# generate a name (hopefully)
 def main():
     name = []
     syll_num = get_results(syllable_number, roll())
@@ -40,15 +50,18 @@ def main():
     print(''.join(name))
 
 
+# Simplest roller function ever
 def roll():
     return randint(1, 100)
 
 
+# Return the result from a given table
 def get_results(group, roll):
     item = [item for item, chance in group.items() if roll in range(chance[0], chance[1] + 1)]
     return item[0]
 
 
+# Apply consonants and vowels as determined by the syllable decsription
 def make_syllable(syllable):
     letters = []
     for letter in [char for char in syllable]:
