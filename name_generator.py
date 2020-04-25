@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
-from random import randint
-from utilities import name_tables
+from utilities import get_results
 from utilities import roll_percent as roll
+from utilities import tables
 
 """
 This program will generate a random name based on the rules as described in
@@ -17,29 +17,21 @@ such things as silent letters and "'".  Re-roll if name is not liked.
 
 # generate a name (hopefully)
 def main():
-    global rolls
+    global verbose
     args = get_args()
-    rolls = args.rolls
+    verbose = args.rolls
     name = []
     if args.syllables:
         syll_num = args.syllables
     else:
-        syll_num = get_results(name_tables.syllable_number, roll())
+        syll_num = get_results(tables.syllable_number, roll(), verbose)
     sylls = []
     for num in range(syll_num):
-        sylls.append(get_results(name_tables.syllables, roll()))
+        sylls.append(get_results(tables.syllables, roll(), verbose))
     for syll in sylls:
         name.append(make_syllable(syll))
-    print('-'.join(name))
-    print(''.join(name))
-
-
-# Return the result from a given table
-def get_results(group, roll):
-    item = [item for item, chance in group.items() if roll in range(chance[0], chance[1] + 1)]
-    if rolls:
-        print('{:02d}: {}'.format(roll, item[0]))
-    return item[0]
+    print('Name: ' + ''.join(name).title())
+    print('Syllables: ' + '-'.join(name))
 
 
 # Apply consonants and vowels as determined by the syllable decsription
@@ -47,9 +39,9 @@ def make_syllable(syllable):
     letters = []
     for letter in [char for char in syllable]:
         if letter == 'c':
-            letters.append(get_results(name_tables.consonants, roll()))
+            letters.append(get_results(tables.consonants, roll(), verbose))
         if letter == 'v':
-            letters.append(get_results(name_tables.vowels, roll()))
+            letters.append(get_results(tables.vowels, roll(), verbose))
     return ''.join(letters)
 
 
