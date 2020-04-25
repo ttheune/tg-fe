@@ -8,9 +8,9 @@ def roll_percent():
 
 # Return a Score (generally 3d6 x number of times)
 def roll_score(times, **kwargs):
-    if kwargs.get('alt') == 'str':
+    if kwargs.get('alt') == 'strength':
         rolls = [randint(1, 8) + randint(1, 6) for _ in range(times)]
-    elif kwargs.get('alt') == 'end':
+    elif kwargs.get('alt') == 'endurance':
         rolls = [randint(1, 4) + randint(1, 4) + randint(1, 4) + randint(1, 4) for _ in range(times)]
     else:
         rolls = [randint(1, 6) + randint(1, 6) + randint(1, 6) for _ in range(times)]
@@ -60,6 +60,11 @@ class tables:
               'martial artist': [91, 97],
               'priest': [98, 99],
               'special': [100, 100]}
+
+    _language = {'human': [1, 20], 'elf': [21, 35], 'dwarf': [36, 45], 'gnome': [46, 50], 'troll': [51, 55],
+                 'goblin': [56, 60], 'centaur': [61, 63], 'giant': [64, 70], 'chimera': [71, 74], 'sprite': [75, 77],
+                 'manticora': [78, 80], 'lizard man': [81, 83], 'ogre': [84, 90], 'wyvern': [91, 94],
+                 'harpy': [95, 97], 'dragon': [98, 100]}
 
     _vowels = {'a': [1, 17],
                'e': [18, 41],

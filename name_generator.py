@@ -21,11 +21,11 @@ def main():
     args = get_args()
     verbose = args.rolls
     name = []
+    sylls = []
     if args.syllables:
         syll_num = args.syllables
     else:
         syll_num = get_results(tables._syllable_number, roll(), verbose)
-    sylls = []
     for num in range(syll_num):
         sylls.append(get_results(tables._syllables, roll(), verbose))
     for syll in sylls:
