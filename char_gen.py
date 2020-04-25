@@ -3,6 +3,7 @@
 import argparse
 from utilities import choose
 from utilities import get_results
+from pprint import pprint
 from utilities import roll_percent
 from utilities import roll_score
 from utilities import tables
