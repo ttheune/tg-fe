@@ -3,8 +3,10 @@
 import argparse
 from utilities import choose
 from utilities import get_results
+from utilities import roll_percent
 from utilities import roll_score
 from utilities import tables
+from random import randint
 
 """
 This program will create a character based on the rules as described in
@@ -51,13 +53,34 @@ def roll_scores(gender, verbose):
     return scores
 
 
-# Modify Scores
+# Validate Class
+def check_class(race, _class):
+    limited = ['warrior-priest', 'warrior-wizard', 'martial artist', 'priest', 'special']
+    while race != ('human' or 'half-human') and _class.lower() in limited:
+        print('{} is not a valid class for {}'.format(_class.title(), race.title()))
+        _class = choose(tables._class, 'Class', verbose)
+    return _class
+
+
+# Determine Class(es)
+def get_class(race):
+    _class = check_class(race, choose(tables._class, 'Class', verbose))
+    if _class == 'special':
+        _class = []
+        for _ in range(randint(2, 5)):
+            new_class = get_results(tables._class, roll_percent(), verbose)
+            while new_class in character['class']:
+                new_class = get_results(tables._class, roll_percent(), verbose)
+            _class.append(new_class)
+    return _class
+
+
 def main():
     verbose = False
     character = {}
     character['gender'] = choose(tables._gender, 'Sex', verbose)
     character['race'] = choose(tables._race, 'Race', verbose)
-    character['class'] = choose(tables._class, 'Class', verbose)
+    character['class'] = get_class(character['race'])
     character['scores'] = roll_scores(character['gender'], verbose)
     pprint(character)
 
