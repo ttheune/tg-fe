@@ -64,7 +64,7 @@ def check_class(race, _class):
 
 
 # Determine Class(es)
-def get_class(race):
+def get_class(race, verbose):
     _class = check_class(race, choose(tables._class, 'Class', verbose))
     if _class == 'special':
         _class = []
@@ -81,7 +81,9 @@ def main():
     character = {}
     character['gender'] = choose(tables._gender, 'Sex', verbose)
     character['race'] = choose(tables._race, 'Race', verbose)
-    character['class'] = get_class(character['race'])
+    if character['race'] == 'other':
+        character['race'] = choose(tables._language, 'Extended Races', verbose)
+    character['class'] = get_class(character['race'], verbose)
     character['scores'] = roll_scores(character['gender'], verbose)
     pprint(character)
 
