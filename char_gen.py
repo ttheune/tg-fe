@@ -18,45 +18,25 @@ The Game: Fantasy Edition
 
 # Generate Scores
 def roll_scores(gender, race, verbose):
-    req_scores = {'strength': '',
-                  'knowledge': '',
-                  'judgement': '',
-                  'endurance': '',
-                  'deftness': '',
-                  'speed': '',
-                  'personality': ''}
-    sense_scores = {'sight': '',
-                    'hearing': '',
-                    'smell': '',
-                    'taste': '',
-                    'touch': '',
-                    'prescience': ''}
-    optional_scores = {'beauty': '',
-                       'bravery': '',
-                       'ego': '',
-                       'curiousity': '',
-                       'temper': '',
-                       'swearing': '',
-                       'humor': '',
-                       'stubonrness': '',
-                       'patience': ''}
-    for score in req_scores.keys():
+    for score in tables._req_scores.keys():
         multiplier = tables._race_multiplier[race][score]
         if isinstance(multiplier, str):
-            req_scores[score] = int(multiplier)
+            tables._req_scores[score] = int(multiplier)
         else:
             if gender == 'female':
-                req_scores[score] = int(ceil(roll_score(3, alt=score, verbose=verbose) * multiplier))
+                tables._req_scores[score] = int(ceil(roll_score(3, alt=score, verbose=verbose) * multiplier))
             else:
-                req_scores[score] = int(ceil(roll_score(3, verbose=verbose) * multiplier))
-    for score in sense_scores.keys():
-        sense_scores[score] = roll_score(2, verbose=verbose)
-    for score in optional_scores.keys():
+                tables._req_scores[score] = int(ceil(roll_score(3, verbose=verbose) * multiplier))
+    for score in tables._sense_scores.keys():
+        tables._sense_scores[score] = roll_score(2, verbose=verbose)
+    for score in tables._optional_scores.keys():
         if score == 'beauty':
-            optional_scores[score] = roll_score(3, verbose=verbose)
+            tables._optional_scores[score] = roll_score(3, verbose=verbose)
         else:
-            optional_scores[score] = roll_score(1, verbose=verbose)
-    scores = {'req_scores': req_scores, 'sense_scores': sense_scores, 'optional_scores': optional_scores}
+            tables._optional_scores[score] = roll_score(1, verbose=verbose)
+    scores = {'req_scores': tables._req_scores,
+              'sense_scores': tables._sense_scores,
+              'optional_scores': tables._optional_scores}
     return scores
 
 
@@ -89,6 +69,7 @@ def get_args():
     return parser.parse_args()
 
 
+# Make a character
 def main():
     args = get_args()
     verbose = args.verbose

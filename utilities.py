@@ -112,3 +112,26 @@ class tables:
                   'cvvc': [100, 100]}
 
     _syllable_number = {1: [1, 30], 2: [31, 75], 3: [76, 93], 4: [94, 97], 5: [98, 100]}
+
+    _req_scores = {'strength': '',
+                   'knowledge': '',
+                   'judgement': '',
+                   'endurance': '',
+                   'deftness': '',
+                   'speed': '',
+                   'personality': ''}
+    _sense_scores = {'sight': '',
+                     'hearing': '',
+                     'smell': '',
+                     'taste': '',
+                     'touch': '',
+                     'prescience': ''}
+    _optional_scores = {'beauty': '',
+                        'bravery': '',
+                        'ego': '',
+                        'curiousity': '',
+                        'temper': '',
+                        'swearing': '',
+                        'humor': '',
+                        'stubonrness': '',
+                        'patience': ''}
