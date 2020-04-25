@@ -3,6 +3,7 @@
 import argparse
 from utilities import choose
 from utilities import get_results
+from math import ceil
 from pprint import pprint
 from utilities import roll_percent
 from utilities import roll_score
@@ -16,7 +17,7 @@ The Game: Fantasy Edition
 
 
 # Generate Scores
-def roll_scores(gender, verbose):
+def roll_scores(gender, race, verbose):
     req_scores = {'strength': '',
                   'knowledge': '',
                   'judgement': '',
@@ -40,9 +41,14 @@ def roll_scores(gender, verbose):
                        'stubonrness': '',
                        'patience': ''}
     for score in req_scores.keys():
-        if gender == 'female':
-            req_scores[score] = roll_score(3, alt=score, verbose=verbose)
-        req_scores[score] = roll_score(3, verbose=verbose)
+        multiplier = tables._race_multiplier[race][score]
+        if isinstance(multiplier, str):
+            req_scores[score] = int(multiplier)
+        else:
+            if gender == 'female':
+                req_scores[score] = int(ceil(roll_score(3, alt=score, verbose=verbose) * multiplier))
+            else:
+                req_scores[score] = int(ceil(roll_score(3, verbose=verbose) * multiplier))
     for score in sense_scores.keys():
         sense_scores[score] = roll_score(2, verbose=verbose)
     for score in optional_scores.keys():
@@ -76,15 +82,24 @@ def get_class(race, verbose):
     return _class
 
 
+# Verbose or not
+def get_args():
+    parser = argparse.ArgumentParser(description='Generate a Character based on TG:FE rules')
+    parser.add_argument('-v', '--verbose', default=False, action='store_true', help='Show rolls')
+    return parser.parse_args()
+
+
 def main():
-    verbose = False
+    args = get_args()
+    verbose = args.verbose
     character = {}
     character['gender'] = choose(tables._gender, 'Sex', verbose)
     character['race'] = choose(tables._race, 'Race', verbose)
     if character['race'] == 'other':
         character['race'] = choose(tables._language, 'Extended Races', verbose)
     character['class'] = get_class(character['race'], verbose)
-    character['scores'] = roll_scores(character['gender'], verbose)
+    character['scores'] = roll_scores(character['gender'], character['race'], verbose)
+    character['age'] = get_results(tables._age, roll_percent(), verbose)
     pprint(character)
 
 
