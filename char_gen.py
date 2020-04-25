@@ -17,7 +17,7 @@ The Game: Fantasy Edition
 
 
 # Generate Scores
-def roll_scores(gender, race, verbose):
+def roll_scores(gender, race):
     for score in tables._req_scores.keys():
         multiplier = tables._race_multiplier[race][score]
         if isinstance(multiplier, str):
@@ -50,7 +50,7 @@ def check_class(race, _class):
 
 
 # Determine Class(es)
-def get_class(race, verbose):
+def get_class(race):
     _class = check_class(race, choose(tables._class, 'Class', verbose))
     if _class == 'special':
         _class = []
@@ -71,6 +71,7 @@ def get_args():
 
 # Make a character
 def main():
+    global verbose
     args = get_args()
     verbose = args.verbose
     character = {}
@@ -78,8 +79,8 @@ def main():
     character['race'] = choose(tables._race, 'Race', verbose)
     if character['race'] == 'other':
         character['race'] = choose(tables._language, 'Extended Races', verbose)
-    character['class'] = get_class(character['race'], verbose)
-    character['scores'] = roll_scores(character['gender'], character['race'], verbose)
+    character['class'] = get_class(character['race'])
+    character['scores'] = roll_scores(character['gender'], character['race'])
     character['age'] = get_results(tables._age, roll_percent(), verbose)
     pprint(character)
 
