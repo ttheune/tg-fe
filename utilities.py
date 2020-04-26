@@ -42,6 +42,11 @@ def choose(table, table_name, verbose):
 
 # Game tables
 class tables:
+    """
+    Generally speaking the tables here represent a list of options with a percentile chance of each option.
+    Format of {'option': [low_end, high_end]} to be used in a range calculation of
+    for x in range('option'[0], 'option'[1] + 1)
+    """
     gender = {'male': [1, 50], 'female': [51, 100]}
 
     race = {'human': [1, 50],
@@ -50,6 +55,7 @@ class tables:
             'dwarf': [86, 95],
             'other': [96, 100]}
 
+    # called it 'job' instead 'class' because of reserved words in python
     job = {'warrior': [1, 50],
            'wizard': [51, 60],
            'thief': [61, 70],
@@ -81,6 +87,7 @@ class tables:
                        'goblin': {'strength': 2.5, 'knowledge': 1, 'judgement': 1, 'endurance': 1.5, 'deftness': 1, 'speed': 1, 'personality': .75},
                        'harpy': {'strength': 1.5, 'knowledge': .66, 'judgement': .5, 'endurance': 1.5, 'deftness': '3', 'speed': .75, 'personality': .25},
                        'human': {'strength': 1, 'knowledge': 1, 'judgement': 1, 'endurance': 1, 'deftness': 1, 'speed': 1, 'personality': 1},
+                       'half-human': {'strength': 1, 'knowledge': 1, 'judgement': 1, 'endurance': 1, 'deftness': 1, 'speed': 1, 'personality': 1},
                        'lizard man': {'strength': 2, 'knowledge': 1, 'judgement': 1, 'endurance': 2, 'deftness': 1, 'speed': 1, 'personality': .8},
                        'manticora': {'strength': 3, 'knowledge': 2, 'judgement': 1.5, 'endurance': 3, 'deftness': '3', 'speed': 1, 'personality': .5},
                        'ogre': {'strength': 3, 'knowledge': 1, 'judgement': 1, 'endurance': 2, 'deftness': .75, 'speed': 1, 'personality': .75},
@@ -94,10 +101,12 @@ class tables:
                        '2': [[25, 28, 15], [29, 32, 20]],
                        '3': [[33, 33, 25]]}
 
+    # Simply a list of possible previous classes
     past_jobs = ['mercenary', 'pirate', 'thief', 'bandit', 'assassin',
                  'spy', 'gladiator', 'priest', 'warrior-priest', 'healer',
                  'martial artist', 'warrior', 'warrior-wizard', 'druid', 'option']
 
+    # These are for generating names
     vowels = {'a': [1, 17],
               'e': [18, 41],
               'i': [42, 58],
@@ -122,6 +131,7 @@ class tables:
 
     syllable_number = {1: [1, 30], 2: [31, 75], 3: [76, 93], 4: [94, 97], 5: [98, 100]}
 
+    # Score tables are used as a working dict and gets populated by char_gen.py
     req_scores = {'strength': '',
                   'knowledge': '',
                   'judgement': '',

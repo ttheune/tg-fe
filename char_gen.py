@@ -62,21 +62,27 @@ def get_class(race):
     return job
 
 
-# Determine past experience
-def past_exp(age):
+# Determine possiblity of past experience
+def possible_past_exp(age):
     num_jobs = 0
     for exp in tables.past_experience.keys():
         for _ in tables.past_experience[exp]:
             if int(age) in range(_[0], _[1] + 1):
                 num_jobs = int(exp)
                 chance = _[2]
-                print('num_jobs: {}\nchance: {}'.format(num_jobs, chance))
+    possibilities = {'num_jobs': num_jobs, 'chance': chance}
+    return possibilities
+
+
+# Generate past experience
+def past_exp(possibilities):
     past_jobs = []
     counter = 0
-    while counter < num_jobs:
+    while counter < possibilities['num_jobs']:
         for job in tables.past_jobs:
-            if roll_percent() <= chance and job not in past_jobs:
-                past_jobs.append({job: randint(1, 6) + randint(1, 6)})
+            if roll_percent() <= possibilities['chance']:
+                if job not in past_jobs:
+                    past_jobs.append({job: randint(1, 6) + randint(1, 6)})
                 break
         counter = counter + 1
     return past_jobs
@@ -102,7 +108,7 @@ def main():
     character['class'] = get_class(character['race'])
     character['scores'] = roll_scores(character['gender'], character['race'])
     character['age'] = get_results(tables.age, roll_percent(), verbose)
-    character['previous experience'] = past_exp(character['age'])
+    character['previous experience'] = past_exp(possible_past_exp(character['age']))
     pprint(character)
 
 
