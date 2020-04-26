@@ -156,3 +156,38 @@ class tables:
                        'humor': '',
                        'stubonrness': '',
                        'patience': ''}
+
+    # Social charts for parentage
+    general_groupings = {'common': [1, 40], 'guild': [41, 55], 'merchant': [56, 75],
+                         'military': [76, 90], 'gentle': [91, 97], 'noble': [98, 100]}
+    # format of {'title': [[chance range], [level range]]}
+    noble = {'page': [[1, 30], [1, 3]], 'knight': [[31, 50], [4, 6]], 'thane': [[51, 70], [7, 7]],
+             'baron': [[71, 85], [8, 8]], 'minister': [[86, 92], [9, 9]],
+             'prince/princess': [[93, 97], [10, 10]], 'king/queen': [[98, 100], [10, 10]]}
+
+    gentle = {'constable': [[1, 45], [1, 3]], 'gentry': [[46, 65], [4, 4]], 'chevalier': [[66, 80], [5, 5]],
+              'pretender': [[81, 90], [6, 6]], 'magistrate': [[91, 97], [6, 6]], 'lord mayor': [[98, 100], [6, 6]]}
+
+    military = {'troop': [[1, 50], [1, 1]], 'guard': [[51, 62]], 'lieutenant': [[63, 72], [3, 3]],
+                'captain': [[73, 81], [4, 4]], 'major': [[82, 87], [5, 5]], 'colonel': [[88, 92], [6, 6]],
+                'general': [[93, 96], [7, 7]], 'army cmdr': [[97, 99], [8, 8]],
+                'chief of staff': [[100, 100], [10, 10]]}
+
+    # format of {'title': [[chance range], [level range], skill bonus]}
+    merchant = {'huckster': [[1, 30], [1, 3], 10], 'trader': [[31, 49], [4, 6], 15], 'monger': [[50, 66], [7, 9], 20],
+                'proprietor': [[67, 81], [10, 12], 25], 'agent': [[82, 91], [13, 15], 30],
+                'magnate': [[92, 97], [16, 18], 35], 'high magnate': [[98, 100], [19, 21], 40]}
+
+    guild = {'apprentice': [[1, 45], [1, 4], 15], 'journeyman': [[46, 65], [5, 8], 20],
+             'craftsman': [[66, 80], [9, 12], 25], 'expert': [[81, 90], [13, 16], 30],
+             'guildmaster': [[91, 97], [17, 20], 35], 'teacher': [[98, 100], [21, 21], 40]}
+
+    common = {'citizen': [[1, 45], [7, 12], 30], 'freeman': [[46, 55], [1, 6], 20], 'serf': [[56, 80], [1, 12], 10],
+              'slave': [[81, 90], [0, 0], 0], 'gypsy': [[91, 98], [0, 0], 0], 'adventurer': [[99, 100], [0, 0], 0]}
+
+    # standar format
+    merchant_class = {'food stuffs': [1, 6], 'alcoholic beverages': [7, 12], 'rope': [13, 18], 'feed and seed': [19, 24], 'weapons': [24, 28], 'livestock': [29, 31], 'leather goods': [32, 34], 'spices': [35, 37], 'building supplies': [38, 40], 'quarry/mines': [41, 43], 'timber/pitch': [44, 46], 'perfume/soap': [47, 49], 'magic weapons': [50, 50], 'clothing': [51, 56], 'small livestock': [57, 62], 'tools': [63, 68], 'armor': [69, 72], 'foundry': [73, 75], 'shipyard': [76, 78], 'hotelier': [79, 81], 'rugs': [82, 84], 'books/arts': [85, 87], 'gems/metal': [88, 90], 'showman': [91, 93], 'processed foodstuffs': [94, 96], 'magic items': [97, 97], 'shipping': [98, 99], 'other': [100, 100]}
+
+    guild_class = {'accountant': [1, 2], 'alchemist': [3, 4], 'architect': [5, 6], 'armorer': [7, 8], 'artist': [9, 10], 'assassin': [11, 12], 'beggar': [13, 14], 'boatmaker': [15, 16], 'bootmaker': [17, 18], 'botanist': [19, 20], 'bowmaker': [21, 22], 'bricklayer': [23, 24], 'carpenter': [25, 28], 'carpetmaker': [29, 30], 'carver': [31, 32], 'engineer': [33, 34], 'executioner': [35, 36], 'fletcher': [37, 38], 'geologist': [39, 40], 'glassblower': [41, 42], 'goldsmith': [43, 44], 'hatmaker': [45, 46], 'inkmaker': [47, 48], 'interpreter': [49, 50], 'jeweller': [51, 52], 'lampmaker': [53, 54], 'leathercrafts': [55, 56], 'trickster': [57, 60], 'miner': [61, 62], 'metal worker': [63, 64], 'navigator': [65, 66], 'perfumer/dyer': [67, 68], 'pitchmaker': [69, 70], 'potter': [71, 72], 'roofer': [73, 74], 'ropemaker': [75, 76], 'saddlemaker': [77, 78], 'sailmaker': [79, 80], 'sage': [81, 82], 'smith': [83, 84], 'shipbuilder': [85, 86], 'slaver': [87, 88], 'tailor': [89, 92], 'tanner': [93, 94], 'weaver': [95, 98], 'winemaker': [99, 100]}
+
+    common_class = {'moneylender': [1, 2], 'moneychanger': [3, 4], 'court clerk': [5, 6], 'teacher': [7, 8], 'doorman/bouncer': [9, 10], 'barkeep': [11, 12], 'messenger': [13, 14], 'attendant': [15, 16], 'warehouseman': [17, 18], 'cowpoke': [19, 20], 'animal trainer': [21, 22], 'gladiator trainer': [23, 24], 'actor': [25, 26], 'minstrel': [27, 28], 'orator': [29, 30], 'manager -': [31, 32], 'undertaker': [33, 34], 'manager': [35, 36], 'tavernkeeper': [37, 38], 'launderer': [39, 40], 'butcher': [41, 42], 'candlemaker': [43, 44], 'tobacco grower': [45, 46], 'towncrier': [47, 48], 'mountaineer': [49, 50], 'tax collector': [51, 52], 'banker': [53, 54], 'bureaucrat': [55, 56], 'maid/butler': [57, 58], 'porter/bearer': [59, 60], 'wet nurse': [61, 62], 'secretary/aide': [63, 64], 'cook': [65, 66], 'shepherd': [67, 68], 'horse trainer': [69, 70], 'bird trainer': [71, 72], 'dancer': [73 74], 'jester': [75, 76], 'stockboy': [77, 78], 'head clerk': [79, 80], 'physician': [81, 84], 'pawnshopsman': [85, 86], 'innkeeper': [87, 88], 'barber': [89, 90], 'baker': [91, 92], 'hunter': [93, 94], 'wagoneer': [95, 96], 'trapper': [97, 98], 'fisherman': [99, 100]}
