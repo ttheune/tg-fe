@@ -94,20 +94,13 @@ def define_parent(parent_type):
     if parent_type == 'mother':
         roll = roll_percent()
         if roll <= 70:
-            parent['social_group'] = 'homemaker'
-            parent['group_rank'] = 'homemaker'
-            parent['level'] = 0
-            parent['job_spec'] = None
-            return parent
+            return homemaker(parent)
     parent['social_group'] = choose(tables.general_groupings, '{}\'s Social Group'.format(parent_type), verbose)
     parent['group_rank'] = choose(getattr(tables, parent['social_group'], None), '{}\'s Rank'.format(parent_type), verbose)
-    upper = ['noble', 'gentle', 'military']
-    lower = ['merchant', 'guild', 'common']
-    exempt = ['slave', 'gypsy', 'adventurer', 'serf']
     level_range = getattr(tables, parent['social_group'], None)[parent['group_rank']]['level']
     parent['level'] = randint(level_range[0], level_range[1])
-    if parent['social_group'] in lower:
-        if parent['group_rank'] not in exempt:
+    if parent['social_group'] in tables.lower:
+        if parent['group_rank'] not in tables.exempt:
             parent['job_spec'] = choose(getattr(tables, parent['social_group'] + '_class', None), '{}\'s Job Description'.format(parent_type), verbose)
             parent['skill_bonus'] = getattr(tables, parent['social_group'], None)[parent['group_rank']]['bonus']
         elif parent['group_rank'] == 'serf':
@@ -116,6 +109,15 @@ def define_parent(parent_type):
             parent['job_spec'] = None
     else:
         parent['job_spec'] = None
+    return parent
+
+
+# moms get shafted in this game
+def homemaker(parent):
+    parent['social_group'] = 'homemaker'
+    parent['group_rank'] = 'homemaker'
+    parent['level'] = 0
+    parent['job_spec'] = None
     return parent
 
 

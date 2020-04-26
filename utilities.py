@@ -260,6 +260,12 @@ class tables:
         'adventurer': {'chance': [99, 100], 'level': [0, 0], 'bonus': 0}
     }
 
+    upper = ['noble', 'gentle', 'military']
+
+    lower = ['merchant', 'guild', 'common']
+
+    exempt = ['slave', 'gypsy', 'adventurer', 'serf']
+
     # standard format
     merchant_class = {
         'food stuffs': {'chance': [1, 6]}, 'alcoholic beverages': {'chance': [7, 12]}, 'rope': {'chance': [13, 18]},
@@ -284,7 +290,7 @@ class tables:
         'engineer': {'chance': [33, 34]}, 'executioner': {'chance': [35, 36]}, 'fletcher': {'chance': [37, 38]},
         'geologist': {'chance': [39, 40]}, 'glassblower': {'chance': [41, 42]}, 'goldsmith': {'chance': [43, 44]},
         'hatmaker': {'chance': [45, 46]}, 'inkmaker': {'chance': [47, 48]}, 'interpreter': {'chance': [49, 50]},
-        'jeweller': {'chance': [51, 52]}, 'lampmaker': {'chance': [53, 54]}, 'leathercrafts': {'chance': [55, 56]},
+        'jeweller': {'chance': [51, 52]}, 'lampmaker': {'chance': [53, 54]}, 'leathercraft': {'chance': [55, 56]},
         'trickster': {'chance': [57, 60]}, 'miner': {'chance': [61, 62]}, 'metal worker': {'chance': [63, 64]},
         'navigator': {'chance': [65, 66]}, 'perfumer/dyer': {'chance': [67, 68]}, 'pitchmaker': {'chance': [69, 70]},
         'potter': {'chance': [71, 72]}, 'roofer': {'chance': [73, 74]}, 'ropemaker': {'chance': [75, 76]},
@@ -314,6 +320,7 @@ class tables:
         'wagoneer': {'chance': [95, 96]}, 'trapper': {'chance': [97, 98]}, 'fisherman': {'chance': [99, 100]}
     }
 
+    # Original Skills section
     orig_skill_total = {
         1: {'range': [6, 18], 'a': 1, 'b': 0, 'c': 0},
         2: {'range': [19, 36], 'a': 2, 'b': 1, 'c': 0},
@@ -360,56 +367,56 @@ class tables:
     }
 
     table_b = {
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []}
+        'accountant': {'chance': [1, 4], 'stats': ['knowledge']},
+        'armorer': {'chance': [5, 8], 'stats': ['strength', 'deftness']},
+        'bird trainer': {'chance': [9, 12], 'stats': ['judgement', 'personality']},
+        'leathercraft': {'chance': [13, 16], 'stats': ['judgement', 'deftness']},
+        'sailor': {'chance': [17, 20], 'stats': ['strength', 'endurance', 'deftness']},
+        'thief': {'chance': [21, 24], 'stats': ['deftness']},
+        'wig/mask maker': {'chance': [25, 28], 'stats': ['judgement', 'deftness']},
+        'diver': {'chance': [29, 32], 'stats': ['strength', 'endurance']},
+        'fletcher': {'chance': [33, 36], 'stats': ['deftness']},
+        'hunter': {'chance': [37, 40], 'stats': ['knowledge', 'judgement']},
+        'ship captain': {'chance': [41, 44], 'stats': ['strength', 'knowledge', 'personality']},
+        'smith': {'chance': [45, 48], 'stats': ['strength', 'judgement', 'deftness']},
+        'swimmer': {'chance': [49, 52], 'stats': ['strength', 'endurance', 'deftness']},
+        'animal trainer': {'chance': [53, 56], 'stats': ['judgement', 'personality']},
+        'assassin': {'chance': [57, 60], 'stats': ['strength', 'knowledge', 'deftness']},
+        'jeweller': {'chance': [61, 64], 'stats': ['judgement', 'deftness']},
+        'mountaineer': {'chance': [65, 68], 'stats': ['strength', 'endurance', 'deftness']},
+        'scribe': {'chance': [69, 72], 'stats': ['knowledge', 'deftness']},
+        'wheelwright': {'chance': [73, 76], 'stats': ['judgement', 'deftness']},
+        'bowmaker': {'chance': [77, 80], 'stats': ['deftness']},
+        'executioner': {'chance': [81, 84], 'stats': ['strength']},
+        'goldsmith': {'chance': [85, 88], 'stats': ['deftness']},
+        'shipbuilder': {'chance': [89, 92], 'stats': ['knowledge', 'deftness', 'personality']},
+        'slaver': {'chance': [93, 96], 'stats': ['knowledge', 'personality']},
+        'spy': {'chance': [97, 100], 'stats': ['knowledge', 'deftness', 'personality']}
     }
 
     table_c = {
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []},
-        '': {'chance': [], 'stats': []}
+        'alchemist': {'chance': [1, 5], 'stats': ['knowledge', 'judgement']},
+        'architect': {'chance': [6, 9], 'stats': ['knowledge', 'judgement']},
+        'artist': {'chance': [10, 13], 'stats': ['knowledge', 'deftness']},
+        'astrologer': {'chance': [14, 17], 'stats': ['judgement']},
+        'astronomer': {'chance': [18, 21], 'stats': ['knowledge']},
+        'author': {'chance': [22, 25], 'stats': ['knowledge']},
+        'botanist': {'chance': [26, 30], 'stats': ['judgement']},
+        'courtesan': {'chance': [31, 34], 'stats': ['knowledge', 'personality', 'beauty']},
+        'dancer': {'chance': [35, 38], 'stats': ['deftness', 'speed']},
+        'engineer': {'chance': [39, 42], 'stats': ['knowledge', 'judgement']},
+        'geologist': {'chance': [43, 46], 'stats': ['knowledge']},
+        'interpreter': {'chance': [47, 50], 'stats': ['knowledge', 'personality']},
+        'lawyer': {'chance': [51, 54], 'stats': ['knowledge', 'personality']},
+        'mathmatician': {'chance': [55, 58], 'stats': ['knowledge']},
+        'metalworker': {'chance': [59, 62], 'stats': ['strength', 'deftness', 'judgement']},
+        'musician': {'chance': [63, 66], 'stats': ['knowledge', 'deftness', 'judgement']},
+        'navigator': {'chance': [67, 70], 'stats': ['knowledge', 'judgement']},
+        'orator': {'chance': [71, 74], 'stats': ['knowledge', 'personality']},
+        'physician': {'chance': [75, 79], 'stats': ['knowledge', 'deftness', 'personality']},
+        'sage': {'chance': [80, 83], 'stats': ['knowledge', 'judgement', 'personality']},
+        'sculptor': {'chance': [84, 87], 'stats': ['knowledge', 'deftness', 'strength']},
+        'scholar': {'chance': [88, 91], 'stats': ['knowledge', 'judgement']},
+        'tracker': {'chance': [92, 96], 'stats': ['knowledge', 'judgement', 'endurance']},
+        'poet/bard': {'chance': [97, 100], 'stats': ['knowledge', 'deftness', 'personality']}
     }
