@@ -20,8 +20,8 @@ def roll_score(times, **kwargs):
 
 
 # Return the result from a given table
-def get_results(group, roll, verbose):
-    item = [item for item, chance in group.items() if roll in range(chance[0], chance[1] + 1)]
+def get_results(table, roll, verbose):
+    item = [item for item, chance in table.items() if roll in range(chance[0], chance[1] + 1)]
     if verbose:
         print('{:02d}: {}'.format(roll, item[0]))
     return item[0]
@@ -160,30 +160,66 @@ class tables:
     # Social charts for parentage
     general_groupings = {'common': [1, 40], 'guild': [41, 55], 'merchant': [56, 75],
                          'military': [76, 90], 'gentle': [91, 97], 'noble': [98, 100]}
-    # format of {'title': [[chance range], [level range]]}
-    noble = {'page': [[1, 30], [1, 3]], 'knight': [[31, 50], [4, 6]], 'thane': [[51, 70], [7, 7]],
-             'baron': [[71, 85], [8, 8]], 'minister': [[86, 92], [9, 9]],
-             'prince/princess': [[93, 97], [10, 10]], 'king/queen': [[98, 100], [10, 10]]}
+    # format of {'title': {'chance': [chance range], 'level': [level range]}}
+    noble = {
+        'page': {'chance': [1, 30], 'level': [1, 3]},
+        'knight': {'chance': [31, 50], 'level': [4, 6]},
+        'thane': {'chance': [51, 70], 'level': [7, 7]},
+        'baron': {'chance': [71, 85], 'level': [8, 8]},
+        'minister': {'chance': [86, 92], 'level': [9, 9]},
+        'prince/princess': {'chance': [93, 97], 'level': [10, 10]},
+        'king/queen': {'chance': [98, 100], 'level': [10, 10]}
+    }
 
-    gentle = {'constable': [[1, 45], [1, 3]], 'gentry': [[46, 65], [4, 4]], 'chevalier': [[66, 80], [5, 5]],
-              'pretender': [[81, 90], [6, 6]], 'magistrate': [[91, 97], [6, 6]], 'lord mayor': [[98, 100], [6, 6]]}
+    gentle = {
+        'constable': {'chance': [1, 45], 'level': [1, 3]},
+        'gentry': {'chance': [46, 65], 'level': [4, 4]},
+        'chevalier': {'chance': [66, 80], 'level': [5, 5]},
+        'pretender': {'chance': [81, 90], 'level': [6, 6]},
+        'magistrate': {'chance': [91, 97], 'level': [6, 6]},
+        'lord mayor': {'chance': [98, 100], 'level': [6, 6]}
+    }
 
-    military = {'troop': [[1, 50], [1, 1]], 'guard': [[51, 62]], 'lieutenant': [[63, 72], [3, 3]],
-                'captain': [[73, 81], [4, 4]], 'major': [[82, 87], [5, 5]], 'colonel': [[88, 92], [6, 6]],
-                'general': [[93, 96], [7, 7]], 'army cmdr': [[97, 99], [8, 8]],
-                'chief of staff': [[100, 100], [10, 10]]}
+    military = {
+        'troop': {'chance': [1, 50], 'level': [1, 1]},
+        'guard': {'chance': [51, 62], 'level': [2, 2]},
+        'lieutenant': {'chance': [63, 72], 'level': [3, 3]},
+        'captain': {'chance': [73, 81], 'level': [4, 4]},
+        'major': {'chance': [82, 87], 'level': [5, 5]},
+        'colonel': {'chance': [88, 92], 'level': [6, 6]},
+        'general': {'chance': [93, 96], 'level': [7, 7]},
+        'army cmdr': {[97, 99], 'level': [8, 8]},
+        'chief of staff': {'chance': [100, 100], 'level': [10, 10]}
+    }
 
-    # format of {'title': [[chance range], [level range], skill bonus]}
-    merchant = {'huckster': [[1, 30], [1, 3], 10], 'trader': [[31, 49], [4, 6], 15], 'monger': [[50, 66], [7, 9], 20],
-                'proprietor': [[67, 81], [10, 12], 25], 'agent': [[82, 91], [13, 15], 30],
-                'magnate': [[92, 97], [16, 18], 35], 'high magnate': [[98, 100], [19, 21], 40]}
+    # format of {'title': {'chance': [chance range], 'level': [level range], 'bonus': skill bonus]}
+    merchant = {
+        'huckster': {'chance': [1, 30], 'level': [1, 3], 'bonus': 10},
+        'trader': {'chance': [31, 49], 'level': [4, 6], 'bonus': 15},
+        'monger': {'chance': [50, 66], 'level': [7, 9], 'bonus': 20},
+        'proprietor': {'chance': [67, 81], 'level': [10, 12], 'bonus': 25},
+        'agent': {'chance': [82, 91], 'level': [13, 15], 'bonus': 30},
+        'magnate': {'chance': [92, 97], 'level': [16, 18], 'bonus': 35},
+        'high magnate': {'chance': [98, 100], 'level': [19, 21], 'bonus': 40}
+    }
 
-    guild = {'apprentice': [[1, 45], [1, 4], 15], 'journeyman': [[46, 65], [5, 8], 20],
-             'craftsman': [[66, 80], [9, 12], 25], 'expert': [[81, 90], [13, 16], 30],
-             'guildmaster': [[91, 97], [17, 20], 35], 'teacher': [[98, 100], [21, 21], 40]}
+    guild = {
+        'apprentice': {'chance': [1, 45], 'level': [1, 4], 'bonus': 15},
+        'journeyman': {'chance': [46, 65], 'level': [5, 8], 'bonus': 20},
+        'craftsman': {'chance': [66, 80], 'level': [9, 12], 'bonus': 25},
+        'expert': {'chance': [81, 90], 'level': [13, 16], 'bonus': 30},
+        'guildmaster': {'chance': [91, 97], 'level': [17, 20], 'bonus': 35},
+        'teacher': {'chance': [98, 100], 'level': [21, 21], 'bonus': 40}
+    }
 
-    common = {'citizen': [[1, 45], [7, 12], 30], 'freeman': [[46, 55], [1, 6], 20], 'serf': [[56, 80], [1, 12], 10],
-              'slave': [[81, 90], [0, 0], 0], 'gypsy': [[91, 98], [0, 0], 0], 'adventurer': [[99, 100], [0, 0], 0]}
+    common = {
+        'citizen': {'chance': [1, 45], 'level': [7, 12], 'bonus': 30},
+        'freeman': {'chance': [46, 55], 'level': [1, 6], 'bonus': 20},
+        'serf': {'chance': [56, 80], 'level': [1, 12], 'bonus': 10},
+        'slave': {'chance': [81, 90], 'level': [0, 0], 'bonus': 0},
+        'gypsy': {'chance': [91, 98], 'level': [0, 0], 'bonus': 0},
+        'adventurer': {'chance': [99, 100], 'level': [0, 0], 'bonus': 0}
+    }
 
     # standar format
     merchant_class = {
