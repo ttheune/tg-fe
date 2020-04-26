@@ -188,7 +188,7 @@ class tables:
         'major': {'chance': [82, 87], 'level': [5, 5]},
         'colonel': {'chance': [88, 92], 'level': [6, 6]},
         'general': {'chance': [93, 96], 'level': [7, 7]},
-        'army cmdr': {[97, 99], 'level': [8, 8]},
+        'army cmdr': {'chance': [97, 99], 'level': [8, 8]},
         'chief of staff': {'chance': [100, 100], 'level': [10, 10]}
     }
 
