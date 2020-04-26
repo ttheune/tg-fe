@@ -21,7 +21,7 @@ def roll_score(times, **kwargs):
 
 # Return the result from a given table
 def get_results(table, roll, verbose):
-    item = [item for item, chance in table.items() if roll in range(chance[0], chance[1] + 1)]
+    item = [item for item, chance in table.items() if roll in range(chance['chance'][0], chance['chance'][1] + 1)]
     if verbose:
         print('{:02d}: {}'.format(roll, item[0]))
     return item[0]
@@ -47,42 +47,45 @@ class tables:
     Format of {'option': [low_end, high_end]} to be used in a range calculation of
     for x in range('option'[0], 'option'[1] + 1)
     """
-    gender = {'male': [1, 50], 'female': [51, 100]}
+    gender = {'male': {'chance': [1, 50]}, 'female': {'chance': [51, 100]}}
 
     race = {
-        'human': [1, 50],
-        'elf': [51, 75],
-        'half-human': [76, 85],
-        'dwarf': [86, 95],
-        'other': [96, 100]
+        'human': {'chance': [1, 50]},
+        'elf': {'chance': [51, 75]},
+        'half-human': {'chance': [76, 85]},
+        'dwarf': {'chance': [86, 95]},
+        'other': {'chance': [96, 100]}
     }
 
     # called it 'job' instead 'class' because of reserved words in python
     job = {
-        'warrior': [1, 50],
-        'wizard': [51, 60],
-        'thief': [61, 70],
-        'healer': [71, 80],
-        'warrior-priest': [81, 85],
-        'warrior-wizard': [86, 90],
-        'martial artist': [91, 97],
-        'priest': [98, 99],
-        'special': [100, 100]
+        'warrior': {'chance': [1, 50]},
+        'wizard': {'chance': [51, 60]},
+        'thief': {'chance': [61, 70]},
+        'healer': {'chance': [71, 80]},
+        'warrior-priest': {'chance': [81, 85]},
+        'warrior-wizard': {'chance': [86, 90]},
+        'martial artist': {'chance': [91, 97]},
+        'priest': {'chance': [98, 99]},
+        'special': {'chance': [100, 100]}
     }
 
     language = {
-        'human': [1, 20], 'elf': [21, 35], 'dwarf': [36, 45], 'gnome': [46, 50], 'troll': [51, 55],
-        'goblin': [56, 60], 'centaur': [61, 63], 'giant': [64, 70], 'chimera': [71, 74], 'sprite': [75, 77],
-        'manticora': [78, 80], 'lizard man': [81, 83], 'ogre': [84, 90], 'wyvern': [91, 94],
-        'harpy': [95, 97], 'dragon': [98, 100]
+        'human': {'chance': [1, 20]}, 'elf': {'chance': [21, 35]}, 'dwarf': {'chance': [36, 45]},
+        'gnome': {'chance': [46, 50]}, 'troll': {'chance': [51, 55]}, 'goblin': {'chance': [56, 60]},
+        'centaur': {'chance': [61, 63]}, 'giant': {'chance': [64, 70]}, 'chimera': {'chance': [71, 74]},
+        'sprite': {'chance': [75, 77]}, 'manticora': {'chance': [78, 80]}, 'lizard man': {'chance': [81, 83]},
+        'ogre': {'chance': [84, 90]}, 'wyvern': {'chance': [91, 94]}, 'harpy': {'chance': [95, 97]},
+        'dragon': {'chance': [98, 100]}
     }
 
     age = {
-        '13': [1, 1], '14': [2, 3], '15': [4, 5], '16': [6, 8], '17': [9, 14],
-        '18': [15, 20], '19': [21, 27], '20': [28, 34], '21': [35, 42], '22': [43, 50],
-        '23': [51, 57], '24': [58, 64], '25': [65, 70], '26': [71, 76], '27': [77, 81],
-        '28': [82, 86], '29': [87, 90], '30': [91, 94], '31': [95, 97], '32': [98, 99],
-        '33': [100, 100]
+        '13': {'chance': [1, 1]}, '14': {'chance': [2, 3]}, '15': {'chance': [4, 5]}, '16': {'chance': [6, 8]},
+        '17': {'chance': [9, 14]}, '18': {'chance': [15, 20]}, '19': {'chance': [21, 27]}, '20': {'chance': [28, 34]},
+        '21': {'chance': [35, 42]}, '22': {'chance': [43, 50]}, '23': {'chance': [51, 57]}, '24': {'chance': [58, 64]},
+        '25': {'chance': [65, 70]}, '26': {'chance': [71, 76]}, '27': {'chance': [77, 81]}, '28': {'chance': [82, 86]},
+        '29': {'chance': [87, 90]}, '30': {'chance': [91, 94]}, '31': {'chance': [95, 97]}, '32': {'chance': [98, 99]},
+        '33': {'chance': [100, 100]}
     }
 
     race_multiplier = {
@@ -122,35 +125,39 @@ class tables:
 
     # These are for generating names
     vowels = {
-        'a': [1, 17],
-        'e': [18, 41],
-        'i': [42, 58],
-        'o': [59, 79],
-        'u': [80, 92],
-        'y': [93, 100]
+        'a': {'chance': [1, 17]},
+        'e': {'chance': [18, 41]},
+        'i': {'chance': [42, 58]},
+        'o': {'chance': [59, 79]},
+        'u': {'chance': [80, 92]},
+        'y': {'chance': [93, 100]}
     }
 
     consonants = {
-        'b': [1, 5], 'c': [6, 10], 'd': [11, 15],
-        'f': [16, 20], 'g': [21, 25], 'h': [26, 30],
-        'j': [31, 35], 'k': [36, 40], 'l': [41, 45],
-        'm': [46, 50], 'n': [51, 55], 'p': [56, 60],
-        'q': [100, 100], 'r': [61, 70], 's': [71, 77],
-        't': [78, 84], 'v': [85, 87], 'w': [88, 93],
-        'x': [94, 95], 'z': [96, 99]
+        'b': {'chance': [1, 5]}, 'c': {'chance': [6, 10]}, 'd': {'chance': [11, 15]},
+        'f': {'chance': [16, 20]}, 'g': {'chance': [21, 25]}, 'h': {'chance': [26, 30]},
+        'j': {'chance': [31, 35]}, 'k': {'chance': [36, 40]}, 'l': {'chance': [41, 45]},
+        'm': {'chance': [46, 50]}, 'n': {'chance': [51, 55]}, 'p': {'chance': [56, 60]},
+        'q': {'chance': [100, 100]}, 'r': {'chance': [61, 70]}, 's': {'chance': [71, 77]},
+        't': {'chance': [78, 84]}, 'v': {'chance': [85, 87]}, 'w': {'chance': [88, 93]},
+        'x': {'chance': [94, 95]}, 'z': {'chance': [96, 99]}
     }
 
     syllables = {
-        'vc': [1, 30],
-        'vcc': [31, 50],
-        'cv': [51, 80],
-        'cvv': [81, 90],
-        'cvc': [91, 99],
-        'cvvc': [100, 100]
+        'vc': {'chance': [1, 30]},
+        'vcc': {'chance': [31, 50]},
+        'cv': {'chance': [51, 80]},
+        'cvv': {'chance': [81, 90]},
+        'cvc': {'chance': [91, 99]},
+        'cvvc': {'chance': [100, 100]}
     }
 
     syllable_number = {
-        1: [1, 30], 2: [31, 75], 3: [76, 93], 4: [94, 97], 5: [98, 100]
+        1: {'chance': [1, 30]},
+        2: {'chance': [31, 75]},
+        3: {'chance': [76, 93]},
+        4: {'chance': [94, 97]},
+        5: {'chance': [98, 100]}
     }
 
     # Score tables are used as a working dict and gets populated by char_gen.py
@@ -187,11 +194,12 @@ class tables:
 
     # Social charts for parentage
     general_groupings = {
-        'common': [1, 40], 'guild': [41, 55], 'merchant': [56, 75],
-        'military': [76, 90], 'gentle': [91, 97], 'noble': [98, 100]
+        'common': {'chance': [1, 40]}, 'guild': {'chance': [41, 55]}, 'merchant': {'chance': [56, 75]},
+        'military': {'chance': [76, 90]}, 'gentle': {'chance': [91, 97]}, 'noble': {'chance': [98, 100]}
     }
 
     # format of {'title': {'chance': [chance range], 'level': [level range]}}
+    # use for x in range('option'[chance][0], 'option'[chance][1] + 1)
     noble = {
         'page': {'chance': [1, 30], 'level': [1, 3]},
         'knight': {'chance': [31, 50], 'level': [4, 6]},
@@ -252,47 +260,56 @@ class tables:
         'adventurer': {'chance': [99, 100], 'level': [0, 0], 'bonus': 0}
     }
 
-    # standar format
+    # standard format
     merchant_class = {
-        'food stuffs': [1, 6], 'alcoholic beverages': [7, 12], 'rope': [13, 18], 'feed and seed': [19, 24],
-        'weapons': [24, 28], 'livestock': [29, 31], 'leather goods': [32, 34], 'spices': [35, 37],
-        'building supplies': [38, 40], 'quarry/mines': [41, 43], 'timber/pitch': [44, 46],
-        'perfume/soap': [47, 49], 'magic weapons': [50, 50], 'clothing': [51, 56], 'small livestock': [57, 62],
-        'tools': [63, 68], 'armor': [69, 72], 'foundry': [73, 75], 'shipyard': [76, 78], 'hotelier': [79, 81],
-        'rugs': [82, 84], 'books/arts': [85, 87], 'gems/metal': [88, 90], 'showman': [91, 93],
-        'processed foodstuffs': [94, 96], 'magic items': [97, 97], 'shipping': [98, 99], 'other': [100, 100]
+        'food stuffs': {'chance': [1, 6]}, 'alcoholic beverages': {'chance': [7, 12]}, 'rope': {'chance': [13, 18]},
+        'feed and seed': {'chance': [19, 24]}, 'weapons': {'chance': [24, 28]}, 'livestock': {'chance': [29, 31]},
+        'leather goods': {'chance': [32, 34]}, 'spices': {'chance': [35, 37]},
+        'building supplies': {'chance': [38, 40]}, 'quarry/mines': {'chance': [41, 43]},
+        'timber/pitch': {'chance': [44, 46]}, 'perfume/soap': {'chance': [47, 49]},
+        'magic weapons': {'chance': [50, 50]}, 'clothing': {'chance': [51, 56]},
+        'small livestock': {'chance': [57, 62]}, 'tools': {'chance': [63, 68]}, 'armor': {'chance': [69, 72]},
+        'foundry': {'chance': [73, 75]}, 'shipyard': {'chance': [76, 78]}, 'hotelier': {'chance': [79, 81]},
+        'rugs': {'chance': [82, 84]}, 'books/arts': {'chance': [85, 87]}, 'gems/metal': {'chance': [88, 90]},
+        'showman': {'chance': [91, 93]}, 'processed foodstuffs': {'chance': [94, 96]},
+        'magic items': {'chance': [97, 97]}, 'shipping': {'chance': [98, 99]}, 'other': {'chance': [100, 100]}
     }
 
     guild_class = {
-        'accountant': [1, 2], 'alchemist': [3, 4], 'architect': [5, 6], 'armorer': [7, 8],
-        'artist': [9, 10], 'assassin': [11, 12], 'beggar': [13, 14], 'boatmaker': [15, 16],
-        'bootmaker': [17, 18], 'botanist': [19, 20], 'bowmaker': [21, 22], 'bricklayer': [23, 24],
-        'carpenter': [25, 28], 'carpetmaker': [29, 30], 'carver': [31, 32], 'engineer': [33, 34],
-        'executioner': [35, 36], 'fletcher': [37, 38], 'geologist': [39, 40], 'glassblower': [41, 42],
-        'goldsmith': [43, 44], 'hatmaker': [45, 46], 'inkmaker': [47, 48], 'interpreter': [49, 50],
-        'jeweller': [51, 52], 'lampmaker': [53, 54], 'leathercrafts': [55, 56], 'trickster': [57, 60],
-        'miner': [61, 62], 'metal worker': [63, 64], 'navigator': [65, 66], 'perfumer/dyer': [67, 68],
-        'pitchmaker': [69, 70], 'potter': [71, 72], 'roofer': [73, 74], 'ropemaker': [75, 76],
-        'saddlemaker': [77, 78], 'sailmaker': [79, 80], 'sage': [81, 82], 'smith': [83, 84],
-        'shipbuilder': [85, 86], 'slaver': [87, 88], 'tailor': [89, 92], 'tanner': [93, 94],
-        'weaver': [95, 98], 'winemaker': [99, 100]
+        'accountant': {'chance': [1, 2]}, 'alchemist': {'chance': [3, 4]}, 'architect': {'chance': [5, 6]},
+        'armorer': {'chance': [7, 8]}, 'artist': {'chance': [9, 10]}, 'assassin': {'chance': [11, 12]},
+        'beggar': {'chance': [13, 14]}, 'boatmaker': {'chance': [15, 16]}, 'bootmaker': {'chance': [17, 18]},
+        'botanist': {'chance': [19, 20]}, 'bowmaker': {'chance': [21, 22]}, 'bricklayer': {'chance': [23, 24]},
+        'carpenter': {'chance': [25, 28]}, 'carpetmaker': {'chance': [29, 30]}, 'carver': {'chance': [31, 32]},
+        'engineer': {'chance': [33, 34]}, 'executioner': {'chance': [35, 36]}, 'fletcher': {'chance': [37, 38]},
+        'geologist': {'chance': [39, 40]}, 'glassblower': {'chance': [41, 42]}, 'goldsmith': {'chance': [43, 44]},
+        'hatmaker': {'chance': [45, 46]}, 'inkmaker': {'chance': [47, 48]}, 'interpreter': {'chance': [49, 50]},
+        'jeweller': {'chance': [51, 52]}, 'lampmaker': {'chance': [53, 54]}, 'leathercrafts': {'chance': [55, 56]},
+        'trickster': {'chance': [57, 60]}, 'miner': {'chance': [61, 62]}, 'metal worker': {'chance': [63, 64]},
+        'navigator': {'chance': [65, 66]}, 'perfumer/dyer': {'chance': [67, 68]}, 'pitchmaker': {'chance': [69, 70]},
+        'potter': {'chance': [71, 72]}, 'roofer': {'chance': [73, 74]}, 'ropemaker': {'chance': [75, 76]},
+        'saddlemaker': {'chance': [77, 78]}, 'sailmaker': {'chance': [79, 80]}, 'sage': {'chance': [81, 82]},
+        'smith': {'chance': [83, 84]}, 'shipbuilder': {'chance': [85, 86]}, 'slaver': {'chance': [87, 88]},
+        'tailor': {'chance': [89, 92]}, 'tanner': {'chance': [93, 94]}, 'weaver': {'chance': [95, 98]},
+        'winemaker': {'chance': [99, 100]}
     }
 
     common_class = {
-        'moneylender': [1, 2], 'moneychanger': [3, 4], 'court clerk': [5, 6],
-        'teacher': [7, 8], 'doorman/bouncer': [9, 10], 'barkeep': [11, 12],
-        'messenger': [13, 14], 'attendant': [15, 16], 'warehouseman': [17, 18],
-        'cowpoke': [19, 20], 'animal trainer': [21, 22], 'gladiator trainer': [23, 24],
-        'actor': [25, 26], 'minstrel': [27, 28], 'orator': [29, 30], 'manager -': [31, 32],
-        'undertaker': [33, 34], 'manager': [35, 36], 'tavernkeeper': [37, 38],
-        'launderer': [39, 40], 'butcher': [41, 42], 'candlemaker': [43, 44],
-        'tobacco grower': [45, 46], 'towncrier': [47, 48], 'mountaineer': [49, 50],
-        'tax collector': [51, 52], 'banker': [53, 54], 'bureaucrat': [55, 56],
-        'maid/butler': [57, 58], 'porter/bearer': [59, 60], 'wet nurse': [61, 62],
-        'secretary/aide': [63, 64], 'cook': [65, 66], 'shepherd': [67, 68],
-        'horse trainer': [69, 70], 'bird trainer': [71, 72], 'dancer': [73, 74],
-        'jester': [75, 76], 'stockboy': [77, 78], 'head clerk': [79, 80],
-        'physician': [81, 84], 'pawnshopsman': [85, 86], 'innkeeper': [87, 88],
-        'barber': [89, 90], 'baker': [91, 92], 'hunter': [93, 94], 'wagoneer': [95, 96],
-        'trapper': [97, 98], 'fisherman': [99, 100]
+        'moneylender': {'chance': [1, 2]}, 'moneychanger': {'chance': [3, 4]}, 'court clerk': {'chance': [5, 6]},
+        'teacher': {'chance': [7, 8]}, 'doorman/bouncer': {'chance': [9, 10]}, 'barkeep': {'chance': [11, 12]},
+        'messenger': {'chance': [13, 14]}, 'attendant': {'chance': [15, 16]}, 'warehouseman': {'chance': [17, 18]},
+        'cowpoke': {'chance': [19, 20]}, 'animal trainer': {'chance': [21, 22]},
+        'gladiator trainer': {'chance': [23, 24]}, 'actor': {'chance': [25, 26]}, 'minstrel': {'chance': [27, 28]},
+        'orator': {'chance': [29, 30]}, 'manager -': {'chance': [31, 32]}, 'undertaker': {'chance': [33, 34]},
+        'manager': {'chance': [35, 36]}, 'tavernkeeper': {'chance': [37, 38]}, 'launderer': {'chance': [39, 40]},
+        'butcher': {'chance': [41, 42]}, 'candlemaker': {'chance': [43, 44]}, 'tobacco grower': {'chance': [45, 46]},
+        'towncrier': {'chance': [47, 48]}, 'mountaineer': {'chance': [49, 50]}, 'tax collector': {'chance': [51, 52]},
+        'banker': {'chance': [53, 54]}, 'bureaucrat': {'chance': [55, 56]}, 'maid/butler': {'chance': [57, 58]},
+        'porter/bearer': {'chance': [59, 60]}, 'wet nurse': {'chance': [61, 62]},
+        'secretary/aide': {'chance': [63, 64]}, 'cook': {'chance': [65, 66]}, 'shepherd': {'chance': [67, 68]},
+        'horse trainer': {'chance': [69, 70]}, 'bird trainer': {'chance': [71, 72]}, 'dancer': {'chance': [73, 74]},
+        'jester': {'chance': [75, 76]}, 'stockboy': {'chance': [77, 78]}, 'head clerk': {'chance': [79, 80]},
+        'physician': {'chance': [81, 84]}, 'pawnshopsman': {'chance': [85, 86]}, 'innkeeper': {'chance': [87, 88]},
+        'barber': {'chance': [89, 90]}, 'baker': {'chance': [91, 92]}, 'hunter': {'chance': [93, 94]},
+        'wagoneer': {'chance': [95, 96]}, 'trapper': {'chance': [97, 98]}, 'fisherman': {'chance': [99, 100]}
     }

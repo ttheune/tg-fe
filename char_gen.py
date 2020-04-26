@@ -88,6 +88,27 @@ def past_exp(possibilities):
     return past_jobs
 
 
+# Parental Socal level
+def define_parent():
+    parent = {}
+    parent['social_group'] = choose(tables.general_groupings, 'Social Group', verbose)
+    parent['group_rank'] = choose(getattr(tables, parent['social_group'], None), 'Rank', verbose)
+    upper = ['noble', 'gentle', 'military']
+    lower = ['merchant', 'guild', 'common']
+    exempt = ['slave', 'gypsy', 'adventurer']
+    level_range = getattr(tables, parent['social_group'], None)[parent['group_rank']]['level']
+    parent['level'] = randint(level_range[0], level_range[1])
+    if parent['social_group'] in lower:
+        if parent['group_rank'] not in exempt:
+            parent['job_spec'] = choose(getattr(tables, parent['social_group'] + '_class', None), 'Job Description', verbose)
+            parent['skill_bonus'] = getattr(tables, parent['social_group'], None)[parent['group_rank']]['bonus']
+        else:
+            parent['job_spec'] = None
+    else:
+        parent['job_spec'] = None
+    return parent
+
+
 # Verbose or not
 def get_args():
     parser = argparse.ArgumentParser(description='Generate a Character based on TG:FE rules')
