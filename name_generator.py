@@ -25,9 +25,9 @@ def main():
     if args.syllables:
         syll_num = args.syllables
     else:
-        syll_num = get_results(tables._syllable_number, roll(), verbose)
+        syll_num = get_results(tables.syllable_number, roll(), verbose)
     for num in range(syll_num):
-        sylls.append(get_results(tables._syllables, roll(), verbose))
+        sylls.append(get_results(tables.syllables, roll(), verbose))
     for syll in sylls:
         name.append(make_syllable(syll))
     print('Name: ' + ''.join(name).title())
@@ -39,9 +39,9 @@ def make_syllable(syllable):
     letters = []
     for letter in [char for char in syllable]:
         if letter == 'c':
-            letters.append(get_results(tables._consonants, roll(), verbose))
+            letters.append(get_results(tables.consonants, roll(), verbose))
         if letter == 'v':
-            letters.append(get_results(tables._vowels, roll(), verbose))
+            letters.append(get_results(tables.vowels, roll(), verbose))
     return ''.join(letters)
 
 
