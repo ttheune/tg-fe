@@ -88,7 +88,7 @@ def past_exp(possibilities):
     return past_jobs
 
 
-# Parental Socal level
+# Parental Social level
 def define_parent(parent_type):
     parent = {}
     if parent_type == 'mother':

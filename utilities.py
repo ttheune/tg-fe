@@ -34,7 +34,7 @@ def choose(table, table_name, verbose):
     choices = list(table.keys())
     while True:
         if choice.lower() in table.keys():
-            return choice
+            return choice.lower()
         if choice.lower() in to_roll:
             return get_results(table, roll_percent(), verbose)
         choice = input('Invalid option.  Roll or choose from:\n{}\n'.format(' '.join(list(table.keys())).title()))
@@ -312,4 +312,104 @@ class tables:
         'physician': {'chance': [81, 84]}, 'pawnshopsman': {'chance': [85, 86]}, 'innkeeper': {'chance': [87, 88]},
         'barber': {'chance': [89, 90]}, 'baker': {'chance': [91, 92]}, 'hunter': {'chance': [93, 94]},
         'wagoneer': {'chance': [95, 96]}, 'trapper': {'chance': [97, 98]}, 'fisherman': {'chance': [99, 100]}
+    }
+
+    orig_skill_total = {
+        1: {'range': [6, 18], 'a': 1, 'b': 0, 'c': 0},
+        2: {'range': [19, 36], 'a': 2, 'b': 1, 'c': 0},
+        3: {'range': [37, 54], 'a': 3, 'b': 2, 'c': 1},
+        4: {'range': [55, 72], 'a': 4, 'b': 3, 'c': 2},
+        5: {'range': [73, 90], 'a': 5, 'b': 4, 'c': 3},
+        6: {'range': [91, 108], 'a': 6, 'b': 5, 'c': 4},
+        7: {'range': [109, 10000], 'a': 7, 'b': 6, 'c': 5},
+    }
+
+    table_a = {
+        'barber': {'chance': [1, 3], 'stats': ['deftness']},
+        'baker': {'chance': [4, 6], 'stats': ['judgement', 'deftness']},
+        'beggar': {'chance': [7, 9], 'stats': ['personality']},
+        'bootmaker': {'chance': [10, 12], 'stats': ['knowledge', 'deftness']},
+        'bricklayer': {'chance': [13, 15], 'stats': ['deftness', 'strength']},
+        'butcher': {'chance': [16, 18], 'stats': ['deftness']},
+        'carpenter': {'chance': [19, 21], 'stats': ['deftness']},
+        'carptemaker': {'chance': [22, 24], 'stats': ['deftness']},
+        'carver': {'chance': [25, 27], 'stats': ['deftness']},
+        'cook': {'chance': [28, 30], 'stats': ['judgement']},
+        'dyer': {'chance': [31, 33], 'stats': ['judgement']},
+        'farmer': {'chance': [34, 36], 'stats': ['strength', 'judgement', 'endurance']},
+        'fisherman': {'chance': [37, 39], 'stats': ['strength', 'judgement', 'endurance']},
+        'glassblower': {'chance': [40, 42], 'stats': ['deftness']},
+        'grocer': {'chance': [43, 45], 'stats': ['judgement', 'personality']},
+        'hatmaker': {'chance': [46, 48], 'stats': ['judgement', 'deftness']},
+        'inkmaker': {'chance': [49, 51], 'stats': ['judgement']},
+        'lampmaker': {'chance': [52, 54], 'stats': ['knowledge']},
+        'mason': {'chance': [55, 57], 'stats': ['strength', 'deftness']},
+        'merchant': {'chance': [58, 61], 'stats': ['knowledge', 'personality']},
+        'miner': {'chance': [61, 64], 'stats': ['strength', 'endurance', 'deftness']},
+        'papermaker': {'chance': [65, 67], 'stats': ['deftness']},
+        'perfumer': {'chance': [68, 70], 'stats': ['judgement', 'deftness']},
+        'pitchmaker': {'chance': [71, 73], 'stats': ['knowledge', 'deftness']},
+        'potter': {'chance': [74, 76], 'stats': ['knowledge', 'deftness']},
+        'roofer': {'chance': [77, 79], 'stats': ['strength', 'deftness']},
+        'rope/net maker': {'chance': [80, 82], 'stats': ['judgement', 'deftness']},
+        'saddlemaker': {'chance': [83, 85], 'stats': ['judgement', 'deftness']},
+        'tailor': {'chance': [86, 91], 'stats': ['deftness']},
+        'tanner': {'chance': [92, 94], 'stats': ['judgement', 'deftness']},
+        'weaver': {'chance': [95, 97], 'stats': ['deftness']},
+        'winemaker': {'chance': [98, 100], 'stats': ['knowledge', 'deftness']}
+    }
+
+    table_b = {
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []}
+    }
+
+    table_c = {
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []},
+        '': {'chance': [], 'stats': []}
     }
