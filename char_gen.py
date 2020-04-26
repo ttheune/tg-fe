@@ -62,6 +62,26 @@ def get_class(race):
     return job
 
 
+# Determine past experience
+def past_exp(age):
+    num_jobs = 0
+    for exp in tables.past_experience.keys():
+        for _ in tables.past_experience[exp]:
+            if int(age) in range(_[0], _[1] + 1):
+                num_jobs = int(exp)
+                chance = _[2]
+                print('num_jobs: {}\nchance: {}'.format(num_jobs, chance))
+    past_jobs = []
+    counter = 0
+    while counter < num_jobs:
+        for job in tables.past_jobs:
+            if roll_percent() <= chance and job not in past_jobs:
+                past_jobs.append({job: randint(1, 6) + randint(1, 6)})
+                break
+        counter = counter + 1
+    return past_jobs
+
+
 # Verbose or not
 def get_args():
     parser = argparse.ArgumentParser(description='Generate a Character based on TG:FE rules')
@@ -82,6 +102,7 @@ def main():
     character['class'] = get_class(character['race'])
     character['scores'] = roll_scores(character['gender'], character['race'])
     character['age'] = get_results(tables.age, roll_percent(), verbose)
+    character['previous experience'] = past_exp(character['age'])
     pprint(character)
 
 

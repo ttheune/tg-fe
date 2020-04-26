@@ -88,6 +88,16 @@ class tables:
                        'troll': {'strength': 3.5, 'knowledge': 1, 'judgement': 1, 'endurance': 3, 'deftness': .75, 'speed': 1, 'personality': .75},
                        'wyvern': {'strength': 3, 'knowledge': 3, 'judgement': 2, 'endurance': 5, 'deftness': '3', 'speed': .75, 'personality': .5}}
 
+    # {'number of classes': {[age range from, age range to, chance], [age range from, age range to, chance]}
+    past_experience = {'0': [[13, 16, 0]],
+                       '1': [[17, 20, 5], [21, 24, 10]],
+                       '2': [[25, 28, 15], [29, 32, 20]],
+                       '3': [[33, 33, 25]]}
+
+    past_jobs = ['mercenary', 'pirate', 'thief', 'bandit', 'assassin',
+                 'spy', 'gladiator', 'priest', 'warrior-priest', 'healer',
+                 'martial artist', 'warrior', 'warrior-wizard', 'druid', 'option']
+
     vowels = {'a': [1, 17],
               'e': [18, 41],
               'i': [42, 58],
