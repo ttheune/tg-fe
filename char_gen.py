@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
+from math import ceil
 from utilities import choose
 from utilities import get_results
-from math import ceil
 from pprint import pprint
 from utilities import roll_percent
 from utilities import roll_score
@@ -121,6 +121,48 @@ def homemaker(parent):
     return parent
 
 
+# Calculate number of original skills
+def calc_skills():
+    total = 0
+    total = sum([total + value for score, value in tables.req_scores.items() if score != 'speed'])
+    for row in tables.orig_skill_total.keys():
+        low = tables.orig_skill_total[row]['chance'][0]
+        high = tables.orig_skill_total[row]['chance'][1]
+        if total in range(low, high + 1):
+            return tables.orig_skill_total[row]
+
+
+# Determine originial skills
+def get_skills(skill_table):
+    orig_skills = {}
+    for table in ['a', 'b', 'c']:
+        table_name = 'table_' + table
+        counter = 0
+        while counter < skill_table[table]:
+            skill = choose(getattr(tables, table_name, None), 'skill from Table {}'.format(table.title()), verbose)
+            if skill not in orig_skills.keys():
+                orig_skills[skill] = skill_value(getattr(tables, 'table_' + table, None)[skill]['stats'])
+                counter = counter + 1
+    return orig_skills
+
+
+# Calculate skill value
+def skill_value(stats):
+    ranks = []
+    for stat in stats:
+        if stat in tables.optional_scores.keys():
+            ranks.append(tables.optional_scores[stat])
+        if stat in tables.sense_scores.keys():
+            ranks.append(tables.sense_scores[stat])
+        if stat in tables.req_scores.keys():
+            ranks.append(tables.req_scores[stat])
+    ranks = sorted(ranks, reverse=True)
+    if len(stats) == 1:
+        return ranks[0] * 2
+    if len(stats) > 1:
+        return ranks[0] + ranks[1]
+
+
 # Verbose or not
 def get_args():
     parser = argparse.ArgumentParser(description='Generate a Character based on TG:FE rules')
@@ -144,6 +186,7 @@ def main():
     character['previous experience'] = past_exp(possible_past_exp(character['age']))
     character['father'] = define_parent('father')
     character['mother'] = define_parent('mother')
+    character['original_skills'] = get_skills(calc_skills())
     pprint(character)
 
 
