@@ -163,6 +163,29 @@ def skill_value(stats):
         return ranks[0] + ranks[1]
 
 
+# Create a Name
+def name():
+    name = []
+    sylls = []
+    syll_num = choose(tables.syllable_number, 'number of syllables in your name', verbose)
+    for num in range(syll_num):
+        sylls.append(choose(tables.syllables, 'syllable', verbose))
+    for syll in sylls:
+        name.append(make_syllable(syll))
+    return ''.join(name).title()
+
+
+# Apply consonants and vowels as determined by the syllable decsription
+def make_syllable(syllable):
+    letters = []
+    for letter in [char for char in syllable]:
+        if letter == 'c':
+            letters.append(get_results(tables.consonants, roll_percent(), verbose))
+        if letter == 'v':
+            letters.append(get_results(tables.vowels, roll_percent(), verbose))
+    return ''.join(letters)
+
+
 # Verbose or not
 def get_args():
     parser = argparse.ArgumentParser(description='Generate a Character based on TG:FE rules')
@@ -187,6 +210,7 @@ def main():
     character['father'] = define_parent('father')
     character['mother'] = define_parent('mother')
     character['original_skills'] = get_skills(calc_skills())
+    character['name'] = name()
     pprint(character)
 
 
