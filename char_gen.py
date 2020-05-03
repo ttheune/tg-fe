@@ -17,16 +17,12 @@ The Game: Fantasy Edition
 
 
 # Generate Scores
-def roll_scores(gender, race):
+def roll_scores(gender):
     for score in tables.req_scores.keys():
-        multiplier = tables.race_multiplier[race][score]
-        if isinstance(multiplier, str):
-            tables.req_scores[score] = int(multiplier)
+        if gender == 'female':
+            tables.req_scores[score] = int(roll_score(3, alt=score, verbose=verbose))
         else:
-            if gender == 'female':
-                tables.req_scores[score] = int(ceil(roll_score(3, alt=score, verbose=verbose) * multiplier))
-            else:
-                tables.req_scores[score] = int(ceil(roll_score(3, verbose=verbose) * multiplier))
+            tables.req_scores[score] = int(roll_score(3, verbose=verbose))
     for score in tables.sense_scores.keys():
         tables.sense_scores[score] = roll_score(2, verbose=verbose)
     for score in tables.optional_scores.keys():
@@ -38,6 +34,16 @@ def roll_scores(gender, race):
               'sense_scores': tables.sense_scores,
               'optional_scores': tables.optional_scores}
     return scores
+
+
+# Race Multiplier for Scores
+def race_multiplier(race):
+    for score in tables.req_scores.keys():
+        multiplier = tables.race_multiplier[race][score]
+        if isinstance(multiplier, str):
+            tables.req_scores[score] = int(multiplier)
+        else:
+            tables.req_scores[score] = ceil(tables.req_scores[score] * multiplier)
 
 
 # Validate Class
@@ -204,13 +210,14 @@ def main():
     if character['race'] == 'other':
         character['race'] = choose(tables.language, 'Extended Races', verbose)
     character['class'] = get_class(character['race'])
-    character['scores'] = roll_scores(character['gender'], character['race'])
+    character['scores'] = roll_scores(character['gender'])
     character['age'] = get_results(tables.age, roll_percent(), verbose)
     character['previous experience'] = past_exp(possible_past_exp(character['age']))
     character['father'] = define_parent('father')
     character['mother'] = define_parent('mother')
     character['original_skills'] = get_skills(calc_skills())
     character['name'] = name()
+    race_multiplier(character['race'])
     pprint(character)
 
 
