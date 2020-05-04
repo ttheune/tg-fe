@@ -6,14 +6,27 @@ def roll_percent():
     return randint(1, 100)
 
 
+# Dice emulator
+def dice(rolls, size, verbose):
+    # dice sizes
+    sizes = [4, 6, 8, 10, 12, 20]
+    results = []
+    for roll in range(rolls):
+        results.append(randint(1, size))
+    if verbose:
+        print(results)
+    return sum(results)
+
+
 # Return a Score (generally 3d6 x number of times)
 def roll_score(times, **kwargs):
+    verbose = kwargs.get('verbose')
     if kwargs.get('alt') == 'strength':
-        rolls = [randint(1, 8) + randint(1, 6) for _ in range(times)]
+        rolls = [dice(1, 8, verbose) + dice(1, 6, verbose) for _ in range(times)]
     elif kwargs.get('alt') == 'endurance':
-        rolls = [randint(1, 4) + randint(1, 4) + randint(1, 4) + randint(1, 4) for _ in range(times)]
+        rolls = [dice(5, 4, verbose) for _ in range(times)]
     else:
-        rolls = [randint(1, 6) + randint(1, 6) + randint(1, 6) for _ in range(times)]
+        rolls = [dice(3, 6, verbose) for _ in range(times)]
     if kwargs.get('verbose'):
         print(rolls)
     return sorted(rolls, reverse=True)[0]
@@ -38,6 +51,28 @@ def choose(table, table_name, verbose):
         if choice.lower() in to_roll:
             return get_results(table, roll_percent(), verbose)
         choice = input('Invalid option.  Roll or choose from:\n{}\n'.format(' '.join(list(table.keys())).title()))
+
+
+# Determine height
+def height(race, gender):
+    table = {
+        'human': {'male': dice(4, 12, False) + 48, 'female': dice(4, 10, False) + 44},
+        'half-human': {'male': dice(4, 12, False) + 48, 'female': dice(4, 10, False) + 44},
+        'elf': {'male': dice(2, 12, False) + 58, 'female': dice(3, 10, False) + 54},
+        'dwarf': {'male': dice(2, 12, False) + 36, 'female': dice(2, 10, False) + 24}
+    }
+    return table[race][gender]
+
+
+# Determine weight
+def weight(race, gender, height):
+    table = {
+        'human': {'male': height * randint(20, 30), 'female': height * randint(20, 30) * .75},
+        'half-human': {'male': height * randint(20, 30), 'female': height * randint(20, 30) * .75},
+        'elf': {'male': height * randint(10, 15), 'female': height * randint(10, 15) * .75},
+        'dwarf': {'male': height * randint(30, 45), 'female': height * randint(30, 45) * .75}
+    }
+    return table[race][gender]
 
 
 # Game tables
@@ -122,6 +157,33 @@ class tables:
         'spy', 'gladiator', 'priest', 'warrior-priest', 'healer',
         'martial artist', 'warrior', 'warrior-wizard', 'druid', 'option'
     ]
+
+    # Physical Description (con't)
+    skin_colour = {
+        'human': {'bronze': {'chance': [1, 60]}, 'white': {'chance': [61, 70]}, 'black': {'chance': [71, 80]},
+                  'yellow': {'chance': [81, 90]}, 'dusky': {'chance': [91, 100]}},
+        'elf': {'tan': {'chance': [1, 80]}, 'white': {'chance': [81, 95]}, 'dusky': {'chance': [96, 100]}},
+        'dwarf': {'dusky': {'chance': [1, 80]}, 'black': {'chance': [81, 95]}, 'tan': {'chance': [96, 100]}}
+    }
+
+    hair = {
+        'colour': {
+            'silver/white': {'chance': [1, 10]}, 'bald': {'chance': [11, 20]}, 'lt. brown': {'chance': [21, 40]},
+            'brunette': {'chance': [41, 50]}, 'black': {'chance': [51, 60]}, 'brown': {'chance': [61, 70]},
+            'red': {'chance': [71, 80]}, 'blonde': {'chance': [81, 90]}, 'golden': {'chance': [91, 100]}
+        },
+        'length': {
+            'very short': {'chance': [1, 20]}, 'short': {'chance': [21, 40]}, 'medium': {'chance': [41, 60]},
+            'long': {'chance': [61, 80]}, 'very long': {'chance': [81, 100]}
+        },
+        'style': {
+            'curly': {'chance': [1, 20]}, 'straight': {'chance': [21, 80]}, 'wavy': {'chance': [81, 100]}
+        },
+        'texture': {
+            'coarse': {'chance': [1, 20]}, 'average': {'chance': [21, 60]},
+            'fine': {'chance': [61, 80]}, 'silky': {'chance': [81, 100]}
+        }
+    }
 
     # These are for generating names
     vowels = {
