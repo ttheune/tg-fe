@@ -4,7 +4,7 @@ import argparse
 from math import ceil
 from pprint import pprint
 from random import randint
-from utilities import choose, get_results, height, roll_percent, roll_score, tables, weight
+from utilities import choose, describe_feature, get_results, height, roll_percent, roll_score, tables, weight
 
 """
 This program will create a character based on the rules as described in
@@ -188,15 +188,6 @@ def make_syllable(syllable):
     return ''.join(letters)
 
 
-# Choose hair
-def describe_hair():
-    opts = ['colour', 'length', 'style', 'texture']
-    hair = {}
-    for opt in opts:
-        hair[opt] = choose(tables.hair[opt], opt.title(), verbose)
-    return hair
-
-
 # Verbose or not
 def get_args():
     parser = argparse.ArgumentParser(description='Generate a Character based on TG:FE rules')
@@ -229,7 +220,8 @@ def main():
             character['skin'] = 'albino'
     else:
         character['skin'] = choose(tables.skin_colour[character['race']], 'Skin Colour', verbose)
-    character['hair'] = describe_hair()
+    character['hair'] = describe_feature('hair', verbose)
+    character['eyes'] = describe_feature('eyes', verbose)
     race_multiplier(character['race'])
     pprint(character)
 

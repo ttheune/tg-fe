@@ -53,26 +53,42 @@ def choose(table, table_name, verbose):
         choice = input('Invalid option.  Roll or choose from:\n{}\n'.format(' '.join(list(table.keys())).title()))
 
 
+# Physical description
 # Determine height
 def height(race, gender):
-    table = {
-        'human': {'male': dice(4, 12, False) + 48, 'female': dice(4, 10, False) + 44},
-        'half-human': {'male': dice(4, 12, False) + 48, 'female': dice(4, 10, False) + 44},
-        'elf': {'male': dice(2, 12, False) + 58, 'female': dice(3, 10, False) + 54},
-        'dwarf': {'male': dice(2, 12, False) + 36, 'female': dice(2, 10, False) + 24}
-    }
-    return table[race][gender]
+    if race in tables.race.keys():
+        table = {
+            'human': {'male': dice(4, 12, False) + 48, 'female': dice(4, 10, False) + 44},
+            'half-human': {'male': dice(4, 12, False) + 48, 'female': dice(4, 10, False) + 44},
+            'elf': {'male': dice(2, 12, False) + 58, 'female': dice(3, 10, False) + 54},
+            'dwarf': {'male': dice(2, 12, False) + 36, 'female': dice(2, 10, False) + 24}
+        }
+        return table[race][gender]
+    else:
+        return None
 
 
 # Determine weight
 def weight(race, gender, height):
-    table = {
-        'human': {'male': height * randint(20, 30), 'female': height * randint(20, 30) * .75},
-        'half-human': {'male': height * randint(20, 30), 'female': height * randint(20, 30) * .75},
-        'elf': {'male': height * randint(10, 15), 'female': height * randint(10, 15) * .75},
-        'dwarf': {'male': height * randint(30, 45), 'female': height * randint(30, 45) * .75}
-    }
-    return table[race][gender]
+    if race in tables.race.keys():
+        table = {
+            'human': {'male': height * randint(20, 30), 'female': height * randint(20, 30) * .75},
+            'half-human': {'male': height * randint(20, 30), 'female': height * randint(20, 30) * .75},
+            'elf': {'male': height * randint(10, 15), 'female': height * randint(10, 15) * .75},
+            'dwarf': {'male': height * randint(30, 45), 'female': height * randint(30, 45) * .75}
+        }
+        return table[race][gender]
+    else:
+        return None
+
+
+# Choose features
+def describe_feature(feature, verbose):
+    result = {}
+    for opt in getattr(tables, feature, None).keys():
+        table = getattr(tables, feature, None)[opt]
+        result[opt] = choose(table, opt.title(), verbose)
+    return result
 
 
 # Game tables
@@ -182,6 +198,23 @@ class tables:
         'texture': {
             'coarse': {'chance': [1, 20]}, 'average': {'chance': [21, 60]},
             'fine': {'chance': [61, 80]}, 'silky': {'chance': [81, 100]}
+        }
+    }
+
+    eyes = {
+        'colour': {
+            'silver': {'chance': [1, 13]}, 'grey': {'chance': [14, 26]}, 'hasel': {'chance': [27, 38]},
+            'green': {'chance': [39, 51]}, 'black': {'chance': [52, 63]}, 'blue': {'chance': [64, 76]},
+            'brown': {'chance': [77, 88]}, 'gold': {'chance': [89, 00]}
+        },
+        'size': {
+            'large': {'chance': [1, 20]}, 'average': {'chance': [21, 80]}, 'small': {'chance': [81, 100]}
+        },
+        'shape': {
+            'round': {'chance': [1, 20]}, 'oval': {'chance': [21, 80]}, 'almond': {'chance': [81, 100]}
+        },
+        'special': {
+            'none': {'chance': [1, 60]}, 'set far': {'chance': [61, 80]}, 'set close': {'chance': [81, 100]}
         }
     }
 
