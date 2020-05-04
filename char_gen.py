@@ -4,7 +4,7 @@ import argparse
 from math import ceil
 from pprint import pprint
 from random import randint
-from utilities import choose, describe_feature, get_results, height, roll_percent, roll_score, tables, weight
+from utilities import choose, dice, get_results, roll_percent, roll_score, tables
 
 """
 This program will create a character based on the rules as described in
@@ -188,6 +188,70 @@ def make_syllable(syllable):
     return ''.join(letters)
 
 
+# Determine height
+def height(race, gender):
+    if race in tables.race.keys():
+        table = {
+            'human': {'male': dice(4, 12, False) + 48, 'female': dice(4, 10, False) + 44},
+            'half-human': {'male': dice(4, 12, False) + 48, 'female': dice(4, 10, False) + 44},
+            'elf': {'male': dice(2, 12, False) + 58, 'female': dice(3, 10, False) + 54},
+            'dwarf': {'male': dice(2, 12, False) + 36, 'female': dice(2, 10, False) + 24}
+        }
+        return table[race][gender]
+    else:
+        return None
+
+
+# Determine weight
+def weight(race, gender, height):
+    if race in tables.race.keys():
+        table = {
+            'human': {'male': height * randint(20, 30), 'female': height * randint(20, 30) * .75},
+            'half-human': {'male': height * randint(20, 30), 'female': height * randint(20, 30) * .75},
+            'elf': {'male': height * randint(10, 15), 'female': height * randint(10, 15) * .75},
+            'dwarf': {'male': height * randint(30, 45), 'female': height * randint(30, 45) * .75}
+        }
+        return table[race][gender]
+    else:
+        return None
+
+
+# General description
+def general_description():
+    features = ['overbite', 'freckles', 'upturned eyebrows', 'high cheekbones', 'epicanthic fold', 'large/small teeth', 'birthmark']
+    has_feature = []
+    for feature in features:
+        if roll_percent() <= 5:
+            character['features'].append('feature')
+    return has_feature
+
+
+# Choose features
+def describe_feature(feature, verbose):
+    result = {}
+    for opt in getattr(tables, feature, None).keys():
+        table = getattr(tables, feature, None)[opt]
+        result[opt] = choose(table, '{} {}'.format(feature.title(), opt.title()), verbose)
+    return result
+
+
+# Physical Description:
+def physical_description(character):
+    character['height'] = height(character['race'], character['gender'])
+    character['weight'] = weight(character['race'], character['gender'], character['height'])
+    if character['race'] == 'human' or 'half-human':
+        if roll_percent() <= 2:
+            character['skin'] = 'albino'
+    else:
+        character['skin'] = choose(tables.skin_colour[character['race']], 'Skin Colour', verbose)
+    character['lips'] = choose(tables.lips, 'Lips', verbose)
+    character['expression'] = choose(tables.expression, 'Habitual Expression', verbose)
+    character['general'] = general_description()
+    opts = ['hair', 'eyes', 'face', 'nose', 'ears']
+    for opt in opts:
+        character[opt] = describe_feature(opt, verbose)
+
+
 # Verbose or not
 def get_args():
     parser = argparse.ArgumentParser(description='Generate a Character based on TG:FE rules')
@@ -213,15 +277,7 @@ def main():
     character['mother'] = define_parent('mother')
     character['original_skills'] = get_skills(calc_skills())
     character['name'] = name()
-    character['height'] = height(character['race'], character['gender'])
-    character['weight'] = weight(character['race'], character['gender'], character['height'])
-    if character['race'] == 'human' or 'half-human':
-        if roll_percent() <= 2:
-            character['skin'] = 'albino'
-    else:
-        character['skin'] = choose(tables.skin_colour[character['race']], 'Skin Colour', verbose)
-    character['hair'] = describe_feature('hair', verbose)
-    character['eyes'] = describe_feature('eyes', verbose)
+    physical_description(character)
     race_multiplier(character['race'])
     pprint(character)
 

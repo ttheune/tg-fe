@@ -53,44 +53,6 @@ def choose(table, table_name, verbose):
         choice = input('Invalid option.  Roll or choose from:\n{}\n'.format(' '.join(list(table.keys())).title()))
 
 
-# Physical description
-# Determine height
-def height(race, gender):
-    if race in tables.race.keys():
-        table = {
-            'human': {'male': dice(4, 12, False) + 48, 'female': dice(4, 10, False) + 44},
-            'half-human': {'male': dice(4, 12, False) + 48, 'female': dice(4, 10, False) + 44},
-            'elf': {'male': dice(2, 12, False) + 58, 'female': dice(3, 10, False) + 54},
-            'dwarf': {'male': dice(2, 12, False) + 36, 'female': dice(2, 10, False) + 24}
-        }
-        return table[race][gender]
-    else:
-        return None
-
-
-# Determine weight
-def weight(race, gender, height):
-    if race in tables.race.keys():
-        table = {
-            'human': {'male': height * randint(20, 30), 'female': height * randint(20, 30) * .75},
-            'half-human': {'male': height * randint(20, 30), 'female': height * randint(20, 30) * .75},
-            'elf': {'male': height * randint(10, 15), 'female': height * randint(10, 15) * .75},
-            'dwarf': {'male': height * randint(30, 45), 'female': height * randint(30, 45) * .75}
-        }
-        return table[race][gender]
-    else:
-        return None
-
-
-# Choose features
-def describe_feature(feature, verbose):
-    result = {}
-    for opt in getattr(tables, feature, None).keys():
-        table = getattr(tables, feature, None)[opt]
-        result[opt] = choose(table, opt.title(), verbose)
-    return result
-
-
 # Game tables
 class tables:
     """
@@ -205,7 +167,7 @@ class tables:
         'colour': {
             'silver': {'chance': [1, 13]}, 'grey': {'chance': [14, 26]}, 'hasel': {'chance': [27, 38]},
             'green': {'chance': [39, 51]}, 'black': {'chance': [52, 63]}, 'blue': {'chance': [64, 76]},
-            'brown': {'chance': [77, 88]}, 'gold': {'chance': [89, 00]}
+            'brown': {'chance': [77, 88]}, 'gold': {'chance': [89, 100]}
         },
         'size': {
             'large': {'chance': [1, 20]}, 'average': {'chance': [21, 80]}, 'small': {'chance': [81, 100]}
@@ -216,6 +178,74 @@ class tables:
         'special': {
             'none': {'chance': [1, 60]}, 'set far': {'chance': [61, 80]}, 'set close': {'chance': [81, 100]}
         }
+    }
+
+    face = {
+        'shape': {
+            'round': {'chance': [1, 40]}, 'oval': {'chance': [41, 80]}, 'narrow': {'chance': [81, 100]}
+        },
+        'features': {
+            'sharp': {'chance': [1, 30]}, 'average': {'chance': [31, 70]}, 'soft': {'chance': [71, 100]}
+        },
+        'facial hair': {
+            'full beard': {'chance': [1, 5]}, 'full beard and mustache': {'chance': [6, 10]},
+            'mustache': {'chance': [11, 15]}, 'partial beard': {'chance': [16, 20]},
+            'partial beard and mustache': {'chance': [21, 25]}, 'clean': {'chance': [26, 100]}
+        }
+    }
+
+    nose = {
+        'length': {
+            'long': {'chance': [1, 20]}, 'average': {'chance': [21, 80]}, 'short': {'chance': [81, 100]}
+        },
+        'width': {
+            'wide': {'chance': [1, 20]}, 'average': {'chance': [21, 80]}, 'thin': {'chance': [81, 100]}
+        },
+        'special': {
+            'none': {'chance': [1, 60]}, 'hawk-like': {'chance': [61, 75]},
+            'wide nostrils': {'chance': [76, 90]}, 'other': {'chance': [91, 100]}
+        }
+    }
+
+    ears = {
+        'size': {
+            'large': {'chance': [1, 20]}, 'average': {'chance': [21, 80]}, 'small': {'chance': [81, 100]}
+        },
+        'shape': {
+            'average': {'chance': [1, 60]}, 'pointed': {'chance': [61, 90]}, 'other': {'chance': [91, 100]}
+        },
+        'lobes': {
+            'lobed': {'chance': [1, 90]}, 'unlobed': {'chance': [91, 100]}
+        }
+    }
+
+    lips = {'full': {'chance': [1, 50]}, 'thin': {'chance': [51, 100]}}
+
+    voice = {
+        'male': {
+            'type': {
+                'soprano': {'chance': [1, 5]}, 'contralto': {'chance': [6, 10]}, 'alto': {'chance': [11, 15]},
+                'tenor': {'chance': [16, 70]}, 'baritone': {'chance': [71, 95]}, 'bass': {'chance': [96, 100]}
+            }
+        },
+        'female': {
+            'type': {
+                'mezzosoprano': {'chance': [1, 20]}, 'soprano': {'chance': [21, 50]}, 'contralto': {'chance': [51, 75]},
+                'alto': {'chance': [76, 90]}, 'tenor': {'chance': [91, 100]}
+            }
+        },
+        'volume': {
+            'very soft': {'chance': [1, 5]}, 'soft': {'chance': [6, 30]}, 'average': {'chance': [31, 70]},
+            'loud/harsh': {'chance': [71, 95]}, 'very loud/harsh': {'chance': [96, 100]}
+        }
+    }
+
+    expression = {
+        'carefree': {'chance': [1, 10]}, 'cynical': {'chance': [11, 15]}, 'neutral': {'chance': [16, 30]},
+        'serious': {'chance': [31, 40]}, 'cold': {'chance': [41, 45]}, 'gentle': {'chance': [46, 50]},
+        'angry': {'chance': [51, 55]}, 'preoccupied': {'chance': [56, 60]}, 'aloof': {'chance': [61, 65]},
+        'puzzled': {'chance': [66, 70]}, 'frowning': {'chance': [71, 80]}, 'smiling': {'chance': [81, 90]},
+        'aristrocratic': {'chance': [91, 95]}, 'amused': {'chance': [96, 100]}
     }
 
     # These are for generating names
