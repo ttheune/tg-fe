@@ -545,3 +545,48 @@ class tables:
         'tracker': {'chance': [92, 96], 'stats': ['knowledge', 'judgement', 'endurance']},
         'poet/bard': {'chance': [97, 100], 'stats': ['knowledge', 'deftness', 'personality']}
     }
+
+    weapons = {2: {'chance': [1, 35]}, 1: {'chance': [36, 90]}, 0: {'chance': [91, 100]}}
+
+    weapon_type = {
+        'sword': {'chance': [1, 35]}, 'dagger': {'chance': [36, 50]}, 'mace': {'chance': [51, 55]},
+        'battleaxe': {'chance': [56, 65]}, 'hammer': {'chance': [66, 70]}, 'bow': {'chance': [71, 75]},
+        'flail': {'chance': [76, 80]}, 'morning star': {'chance': [81, 83]}, 'throwing knives': {'chance': [84, 85]},
+        'throwing stars': {'chance': [86, 87]}, 'bullwhip': {'chance': [88, 90]}, 'halberd': {'chance': [91, 92]},
+        'lance': {'chance': [93, 94]}, 'pike': {'chance': [95, 96]}, 'spear': {'chance': [97, 100]}
+    }
+
+    sword = {
+        'regular': {'chance': [1, 45]}, 'sabre': {'chance': [46, 57]}, 'scimitar': {'chance': [58, 69]},
+        'cutlass': {'chance': [70, 82]}, 'broadsword': {'chance': [83, 94]}, '2-handed': {'chance': [95, 100]}
+    }
+
+    dagger = {'dirk': {'chance': [1, 34]}, 'poiniard': {'chance': [35, 67]}, 'stiletto': {'chance': [68, 100]}}
+
+    bow = {
+        'short bow': {'chance': [1, 20]}, 'long bow': {'chance': [21, 35]},
+        'composite bow': {'chance': [36, 85]}, 'crossbow': {'chance': [86, 100]}
+    }
+
+    armor_type = {'leather': {'chance': [1, 30]}, 'chainmail': {'chance': [31, 80]}, 'platemail': {'chance': [81, 00]}}
+
+    armor_size = {'abbreviated': {'chance': [1, 20]}, 'medium': {'chance': [21, 50]}, 'full': {'chance': [51, 00]}}
+
+    shield_type = {
+        'leather': {'chance': [1, 10]}, 'wood': {'chance': [11, 35]},
+        'thin plate': {'chance': [36, 80]}, 'thick plate': {'chance': [81, 00]}
+    }
+
+    shield_size = {'small': {'chance': [1, 33]}, 'medium': {'chance': [34, 67]}, 'large': {'chance': [68, 100]}}
+
+    helmet = {
+        'leather': {'chance': [1, 30]}, 'thin plate/chainmail': {'chance': [31, 80]},
+        'thick plate': {'chance': [81, 100]}
+    }
+
+    steed = {
+        'mule': {'chance': [1, 10]}, 'light horse': {'chance': [11, 25]}, 'medium horse': {'chance': [26, 45]},
+        'heavy horse': {'chance': [46, 95]}, 'other': {'chance': [96, 100]}
+    }
+
+    magic = {1: {'chance': [1, 40]}, 2: {'chance': [41, 70]}, 3: {'chance': [71, 90]}, 4: {'chance': [91, 100]}}
